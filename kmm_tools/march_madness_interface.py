@@ -11,7 +11,7 @@ from pathlib import Path
 import pandas as pd
 import numpy as np
 import base64
-from march_madness_submission_tester import _brier
+from march_madness_submission_tester import _brier, evaluate_stage1_submission
 from march_madness_slot_results import HISTORIC_RESULTS
 from march_madness_simulator import (
     start_tournament,
@@ -75,12 +75,7 @@ except ValueError:
                adjust settings to continue!
                """)
     quit()
-except KeyError:
-    st.warning("""
-               Please check that you have selected the
-               right competition: men\'s or women\'s'
-               """)
-    quit()
+
 
 # Collect simulation info
 seasons = submission["ID"].map(lambda x: int(x.split("_")[0])).unique().tolist()
@@ -106,29 +101,26 @@ except KeyError:
 
 
 with st.sidebar:
-    with st.form("test"):
-        use_historic_results = False
-        if len(historic_results) > 0:
-            use_historic_results = st.checkbox("Apply historic results", value=False)
+    use_historic_results = False
+    if len(historic_results) > 0:
+        use_historic_results = st.checkbox("Apply historic results", value=False)
 
-        style = st.radio(
-            "Stochastic or Deterministic Bracket?", ["Chalk", "Random"]
-        ).lower()
-        seed = st.number_input(
-            label="Seed for stochastic bracket:", value=0, min_value=0
-        )
-        np.random.seed(seed)
+    style = st.segmented_control(
+        "Stochastic or Deterministic Bracket?", ["Chalk", "Random"], default="Chalk"
+    ).lower()
+    seed = st.number_input(label="Seed for stochastic bracket:", value=0, min_value=0)
+    np.random.seed(seed)
 
-        st.write("""
-                        **Chalk bracket**: will always select the team favored by the
-                        model.\n
-                        **Random bracket**: will randomize the winner for each game
-                        using the model probabilities. Please choose a new seed to
-                        change the randomization!
-                        """)
+    st.write("""
+                    **Chalk bracket**: will always select the team favored by the
+                    model.\n
+                    **Random bracket**: will randomize the winner for each game
+                    using the model probabilities. Please choose a new seed to
+                    change the randomization!
+                    """)
 
-        st.form_submit_button("Apply settings")
-
+if not np.isnan(sub_score := evaluate_stage1_submission(submission, seasons=seasons)):
+    st.markdown(f"### Total submission score: {sub_score:.5f}")
 
 SEASON_INFO = pd.read_csv(DEFAULT_COMPETITION_DATA_PATH / (f"{mw}Seasons.csv")).query(
     "Season == @season"
@@ -154,7 +146,7 @@ if len(tournament.games) == 63 and current_r == 0:
     current_r = 1
 
 t1, t2, t3, t4, t5, t6, ts = st.tabs(
-    list(sim_headers.values())[:5] + ["Final Four and Championship", "Bracket Summary"]
+    list(sim_headers.values())[:5] + ["Final Four and Championship", "Summary"]
 )
 round_tabs = {
     0: t1,
@@ -203,10 +195,13 @@ try:
     w_name = tournament.results["R6CH"].name
 except KeyError as e:
     if e.args[0] == "R6CH":
-        st.warning("2025 tournament seeds are not yet available.")
+        st.warning(
+            "2025 tournament seeds are not yet available. "
+            "Check back on March 17th when seeds have been assigned."
+        )
         quit()
     else:
-        raise 3
+        raise e
 ts.write(f"**{w_name} wins the tournament!**")
 
 # summary
@@ -215,7 +210,7 @@ bracket_odds = int(1 / np.cumprod(odds)[-1])
 avgbrier = _brier(odds, np.ones(len(odds))).mean()
 success = (odds > 0.5).sum() / len(odds)
 
-ts.write(
+ts.markdown(
     """
         According to these probabilities, your odds of a perfect bracket
         based on these selections are 1 in **{a:,d}**... Yikes! Good luck!
