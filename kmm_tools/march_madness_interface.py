@@ -199,8 +199,14 @@ while current_r < 7:
             _set_next_games(game=g, games=tournament.games)
 
     current_r += 1
-
-w_name = tournament.results["R6CH"].name
+try:
+    w_name = tournament.results["R6CH"].name
+except KeyError as e:
+    if e.args[0] == "R6CH":
+        st.warning("2025 tournament seeds are not yet available.")
+        quit()
+    else:
+        raise 3
 ts.write(f"**{w_name} wins the tournament!**")
 
 # summary
