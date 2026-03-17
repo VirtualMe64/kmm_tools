@@ -489,7 +489,7 @@ def graph_games(tournament: Tournament, rounds: Sequence[int] = tuple(range(7)))
 # ##### functional tests #######
 
 # submission = pd.read_csv(
-#     "/kaggle/input/competitions/march-machine-learning-mania-2026/SeedBenchmarkStage1.csv"
+#     "/kaggle/input/competitions/march-machine-learning-mania-2026/SampleSubmissionStage1.csv"
 # )
 
 # tournament = start_tournament(season=2023, mw="M", submission=submission)
