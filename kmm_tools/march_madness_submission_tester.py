@@ -303,7 +303,7 @@ def _test_sample_evaluation() -> None:
     }
     for sample_path, expected_result in expectations.items():
         if not sample_path.exists():
-            warnings.warn(f"{sample_path} does not exist... skipping tests")
+            warnings.warn(f"{sample_path} does not exist... skipping validation for this file")
             continue
         sample = _cached_csv_read(sample_path)
         seasons = sample["ID"].map(lambda x: int(x.split("_")[0])).unique().tolist()
@@ -324,7 +324,7 @@ def _test_submission_count() -> None:
     )
     for sample_path in paths:
         if not sample_path.exists():
-            warnings.warn(f"{sample_path} does not exist... skipping tests")
+            warnings.warn(f"{sample_path} does not exist... skipping validation for this file")
             continue
         sample = _cached_csv_read(sample_path)
         seasons = sample["ID"].map(lambda x: int(x.split("_")[0])).unique().tolist()
@@ -347,7 +347,7 @@ def _test_submission_team_order() -> None:
     )
     for sample_path in paths:
         if not sample_path.exists():
-            warnings.warn(f"{sample_path} does not exist... skipping tests")
+            warnings.warn(f"{sample_path} does not exist... skipping validation for this file")
             continue
         sample = _cached_csv_read(sample_path)
         bad_sample = sample.copy()
@@ -372,7 +372,7 @@ def _test_submission_columns() -> None:
     )
     for sample_path in paths:
         if not sample_path.exists():
-            warnings.warn(f"{sample_path} does not exist... skipping tests")
+            warnings.warn(f"{sample_path} does not exist... skipping validation for this file")
             continue
         sample = _cached_csv_read(sample_path)
         assert _check_columns(
