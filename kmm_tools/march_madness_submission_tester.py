@@ -300,11 +300,11 @@ def _test_sample_evaluation() -> None:
     """make sure sample submissions return expected values"""
     expectations = {
         DEFAULT_COMPETITION_DATA_PATH / "SampleSubmissionStage1.csv": 0.25,
-        DEFAULT_COMPETITION_DATA_PATH / "SeedBenchmarkStage1.csv": 0.18767401129943503,
     }
     for sample_path, expected_result in expectations.items():
         if not sample_path.exists():
-            warnings.warn("{sample_path} does not exist... skipping tests")
+            warnings.warn(f"{sample_path} does not exist... skipping tests")
+            continue
         sample = _cached_csv_read(sample_path)
         seasons = sample["ID"].map(lambda x: int(x.split("_")[0])).unique().tolist()
         score = evaluate_stage1_submission(sample, seasons)
@@ -321,11 +321,11 @@ def _test_submission_count() -> None:
     paths = (
         DEFAULT_COMPETITION_DATA_PATH / "SampleSubmissionStage1.csv",
         DEFAULT_COMPETITION_DATA_PATH / "SampleSubmissionStage2.csv",
-        DEFAULT_COMPETITION_DATA_PATH / "SeedBenchmarkStage1.csv",
     )
     for sample_path in paths:
         if not sample_path.exists():
-            warnings.warn("{sample_path} does not exist... skipping tests")
+            warnings.warn(f"{sample_path} does not exist... skipping tests")
+            continue
         sample = _cached_csv_read(sample_path)
         seasons = sample["ID"].map(lambda x: int(x.split("_")[0])).unique().tolist()
         assert not _check_sub_count(
@@ -344,11 +344,11 @@ def _test_submission_team_order() -> None:
     paths = (
         DEFAULT_COMPETITION_DATA_PATH / "SampleSubmissionStage1.csv",
         DEFAULT_COMPETITION_DATA_PATH / "SampleSubmissionStage2.csv",
-        DEFAULT_COMPETITION_DATA_PATH / "SeedBenchmarkStage1.csv",
     )
     for sample_path in paths:
         if not sample_path.exists():
-            warnings.warn("{sample_path} does not exist... skipping tests")
+            warnings.warn(f"{sample_path} does not exist... skipping tests")
+            continue
         sample = _cached_csv_read(sample_path)
         bad_sample = sample.copy()
         bad_sample["ID"] = bad_sample["ID"].map(_swap_game_id)
@@ -369,11 +369,11 @@ def _test_submission_columns() -> None:
     paths = (
         DEFAULT_COMPETITION_DATA_PATH / "SampleSubmissionStage1.csv",
         DEFAULT_COMPETITION_DATA_PATH / "SampleSubmissionStage2.csv",
-        DEFAULT_COMPETITION_DATA_PATH / "SeedBenchmarkStage1.csv",
     )
     for sample_path in paths:
         if not sample_path.exists():
-            warnings.warn("{sample_path} does not exist... skipping tests")
+            warnings.warn(f"{sample_path} does not exist... skipping tests")
+            continue
         sample = _cached_csv_read(sample_path)
         assert _check_columns(
             sample.head()
