@@ -25,9 +25,9 @@ except ModuleNotFoundError:
     pass
 if (p := os.getenv("KAGGLE_KERNEL_RUN_TYPE")) is not None:
     DEFAULT_COMPETITION_DATA_PATH = Path(
-        "/kaggle/input/march-machine-learning-mania-2025"
+        "/kaggle/input/march-machine-learning-mania-2026"
     )
-    # COMPETITION_DATA_PATH = Path("/kaggle/input/march-machine-learning-mania-2025")
+    # COMPETITION_DATA_PATH = Path("/kaggle/input/march-machine-learning-mania-2026")
 elif (p := os.getenv("COMPETITION_DATA_PATH")) is not None:
     DEFAULT_COMPETITION_DATA_PATH = Path(p)
 else:
@@ -101,7 +101,7 @@ def evaluate_stage1_submission_games(
 
 
 def validate_submission_format(
-    submission: pd.DataFrame, check_seasons: Sequence[int] = [2025]
+    submission: pd.DataFrame, check_seasons: Sequence[int] = [2026]
 ) -> dict[str, bool]:
     """
     Validate that a submission is ready for submission.
@@ -117,7 +117,7 @@ def validate_submission_format(
     submission : pd.DataFrame
         The submission DataFrame to validate.
     check_seasons : Sequence[int], optional
-        The seasons to validate the submission for. Defaults to [2025].
+        The seasons to validate the submission for. Defaults to [2026].
 
     Returns
     -------
@@ -393,7 +393,7 @@ _test_submission_columns()
 
 def test_submission_creation() -> None:
     """creates a sample template and ensures it is consistent with checks"""
-    stage1_seasons = (2021, 2022, 2023, 2024, 2025)
+    stage1_seasons = (2022, 2023, 2024, 2025)
     stage1_sub = make_template_submission(stage1_seasons)
     assert _check_columns(stage1_sub)
     assert _check_id_team_order(stage1_sub)

@@ -15,9 +15,9 @@ except ModuleNotFoundError:
     pass
 if (p := os.getenv("KAGGLE_KERNEL_RUN_TYPE")) is not None:
     DEFAULT_COMPETITION_DATA_PATH = Path(
-        "/kaggle/input/march-machine-learning-mania-2025"
+        "/kaggle/input/march-machine-learning-mania-2026"
     )
-    # COMPETITION_DATA_PATH = Path("/kaggle/input/march-machine-learning-mania-2025")
+    # COMPETITION_DATA_PATH = Path("/kaggle/input/march-machine-learning-mania-2026")
 elif (p := os.getenv("COMPETITION_DATA_PATH")) is not None:
     DEFAULT_COMPETITION_DATA_PATH = Path(p)
 else:
