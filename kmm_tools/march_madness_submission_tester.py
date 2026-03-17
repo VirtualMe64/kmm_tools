@@ -393,7 +393,7 @@ _test_submission_columns()
 
 def test_submission_creation() -> None:
     """creates a sample template and ensures it is consistent with checks"""
-    stage1_seasons = (2021, 2022, 2023, 2024, 2026)
+    stage1_seasons = (2022, 2023, 2024, 2025)
     stage1_sub = make_template_submission(stage1_seasons)
     assert _check_columns(stage1_sub)
     assert _check_id_team_order(stage1_sub)
