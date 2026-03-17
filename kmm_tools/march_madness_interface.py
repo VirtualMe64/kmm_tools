@@ -33,9 +33,9 @@ except ModuleNotFoundError:
     pass
 if (p := os.getenv("KAGGLE_KERNEL_RUN_TYPE")) is not None:
     DEFAULT_COMPETITION_DATA_PATH = Path(
-        "/kaggle/input/march-machine-learning-mania-2025"
+        "/kaggle/input/march-machine-learning-mania-2026"
     )
-    # COMPETITION_DATA_PATH = Path("/kaggle/input/march-machine-learning-mania-2025")
+    # COMPETITION_DATA_PATH = Path("/kaggle/input/march-machine-learning-mania-2026")
 elif (p := os.getenv("COMPETITION_DATA_PATH")) is not None:
     DEFAULT_COMPETITION_DATA_PATH = Path(p)
 else:
@@ -197,7 +197,7 @@ try:
 except KeyError as e:
     if e.args[0] == "R6CH":
         st.warning(
-            "2025 tournament seeds are not yet available. "
+            "2026 tournament seeds are not yet available. "
             "Check back on March 17th when seeds have been assigned."
         )
         quit()

@@ -21,9 +21,9 @@ except ModuleNotFoundError:
     pass
 if (p := os.getenv("KAGGLE_KERNEL_RUN_TYPE")) is not None:
     DEFAULT_COMPETITION_DATA_PATH = Path(
-        "/kaggle/input/march-machine-learning-mania-2025"
+        "/kaggle/input/march-machine-learning-mania-2026"
     )
-    # COMPETITION_DATA_PATH = Path("/kaggle/input/march-machine-learning-mania-2025")
+    # COMPETITION_DATA_PATH = Path("/kaggle/input/march-machine-learning-mania-2026")
 elif (p := os.getenv("COMPETITION_DATA_PATH")) is not None:
     DEFAULT_COMPETITION_DATA_PATH = Path(p)
 else:
@@ -489,7 +489,7 @@ def graph_games(tournament: Tournament, rounds: Sequence[int] = tuple(range(7)))
 # ##### functional tests #######
 
 # submission = pd.read_csv(
-#     "/kaggle/input/march-machine-learning-mania-2025/SeedBenchmarkStage1.csv"
+#     "/kaggle/input/march-machine-learning-mania-2026/SeedBenchmarkStage1.csv"
 # )
 
 # tournament = start_tournament(season=2023, mw="M", submission=submission)

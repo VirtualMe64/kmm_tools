@@ -3,7 +3,7 @@
 # from march_madness_simulator import start_tournament, simulate_tournament
 
 # results = {"M":{},"W":{}}
-# for s in range(2010, 2025):
+# for s in range(2010, 2026):
 #     if s == 2020: #
 #         continue
 #     sub = _get_historical_results([s])
@@ -1909,5 +1909,5 @@ HISTORIC_RESULTS = {
     },
 }
 
-HISTORIC_RESULTS["M"].update({2025: {}})
-HISTORIC_RESULTS["W"].update({2025: {}})
+HISTORIC_RESULTS["M"].update({2026: {}})
+HISTORIC_RESULTS["W"].update({2026: {}})
